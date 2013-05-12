@@ -1,0 +1,52 @@
+<project>
+	<!-- 
+		Script permettant de déployer le chargeur de module
+	-->
+	
+	<property file="build.properties"/>
+	
+	
+	<target name="clean-all">
+	
+		<delete dir="${project.bin.dir}" />
+		<delete dir="${sdk.release.dir}" />
+		<delete dir="${lib.release.dir}" />
+	</target>
+	
+	<!-- Cette 'target' permet de déployer la derniere version du chargeur de module -->
+	<target name="build">
+	
+		<mkdir dir="${project.bin.dir}"/>
+		
+		<javac srcdir="${project.src.dir}"
+         destdir="${project.bin.dir}"
+         classpath="."
+         debug="off"
+		/>
+		
+	</target>
+	
+	
+	<!-- Cette 'target' permet de déployer la librairie du chargeur de module -->
+	<target name="deploy-jar">
+		
+		<mkdir dir="${lib.release.dir}"/>
+		
+		<jar destfile="${lib.release.dir}${kit.release.bin}" basedir="${project.bin.dir}">
+
+
+		</jar>
+	</target>
+	
+	<!-- Cette 'target' permet de déployer le SDK du chargeur de module -->
+	<target name="deploy-sdk">
+		
+		<mkdir dir="${sdk.release.dir}"/>
+		<jar destfile="${sdk.release.dir}${sdk.release.bin}" basedir="${project.bin.dir}">
+
+			<include name="${sdk.dir}${module}"/>
+		</jar>
+		
+	</target>
+	
+</project>
